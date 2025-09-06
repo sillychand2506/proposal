@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Marry Me?</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Inter:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fce4ec; /* Light pink background */
+        }
+
+        .dancing-script {
+            font-family: 'Dancing Script', cursive;
+        }
+
+        .proposal-gradient {
+            background-image: linear-gradient(135deg, #f06b6b, #f3a8c4, #f8c8d8);
+        }
+
+        .moon-gradient {
+            background-image: linear-gradient(135deg, #0f172a, #2c0b40);
+        }
+
+        /* Loading animation styles */
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #fce4ec;
+            z-index: 100;
+            transition: opacity 1.5s ease-in-out;
+            overflow: hidden; /* Hide overflow from image */
+        }
+
+        .loading-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Make sure the image covers the whole screen */
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .fade-out {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .message-box {
+            background-color: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .proposal-button {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .proposal-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Confetti animation */
+        @keyframes confetti-fall {
+            0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+
+        .confetti {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 50;
+        }
+
+        .confetti-piece {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #ff577f;
+            animation: confetti-fall 3s linear infinite;
+        }
+
+        .confetti-piece:nth-child(2n) { background-color: #ffc7d6; }
+        .confetti-piece:nth-child(3n) { background-color: #b0e0e6; }
+        .confetti-piece:nth-child(4n) { background-color: #90ee90; }
+        
+        .confetti-piece:nth-child(5n) { animation-duration: 4s; }
+        .confetti-piece:nth-child(6n) { animation-duration: 3.5s; }
+        .confetti-piece:nth-child(7n) { animation-duration: 4.5s; }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+
+    <!-- Loading Screen with animation -->
+    <div id="loading-screen">
+        <img src="https://placehold.co/1080x1920/D4A3AE/FFF?text=The+wait+will+be+worth+it+in+sha+Allah" class="loading-image" alt="Loading animation">
+        <p class="absolute bottom-8 text-2xl md:text-3xl text-white dancing-script font-bold animate-pulse drop-shadow-lg">The wait will be worth it in sha Allah</p>
+    </div>
+    
+    <!-- Confetti Container -->
+    <div id="confetti-container" class="confetti hidden"></div>
+
+    <!-- Main Content -->
+    <main id="main-content" class="min-h-screen pt-16 hidden">
+
+        <!-- Adoring Her Section (Moon Theme) -->
+        <section class="text-center py-20 moon-gradient text-white">
+            <h2 class="text-6xl md:text-8xl dancing-script font-bold drop-shadow-lg">Zoonii Mera Chand</h2>
+            <div class="max-w-4xl mx-auto px-4 mt-8">
+                <p class="text-lg md:text-xl leading-relaxed">
+                    Just like the moon guides the night, you illuminate my world. Your presence is as constant and beautiful as the stars, and your love is the brightest light I have ever known.
+                    Happy Birthday Zoonii
+                </p>
+            </div>
+            <div class="flex flex-col md:flex-row justify-center items-center gap-6 mt-10 px-4">
+                <div class="rounded-full overflow-hidden w-40 h-40 md:w-56 md:h-56 shadow-2xl border-4 border-yellow-300 transform hover:scale-110 transition-transform duration-300">
+                    <img src="https://placehold.co/500x500/F0E68C/000?text=My+Bubu" alt="Placeholder image of a star" class="w-full h-full object-cover">
+                </div>
+                <div class="rounded-full overflow-hidden w-40 h-40 md:w-56 md:h-56 shadow-2xl border-4 border-yellow-300 transform hover:scale-110 transition-transform duration-300">
+                    <img src="https://placehold.co/500x500/F0E68C/000?text=My+Moon" alt="Placeholder image of a moon" class="w-full h-full object-cover">
+                </div>
+                <div class="rounded-full overflow-hidden w-40 h-40 md:w-56 md:h-56 shadow-2xl border-4 border-yellow-300 transform hover:scale-110 transition-transform duration-300">
+                    <img src="https://placehold.co/500x500/F0E68C/000?text=My+Universe" alt="Placeholder image of a galaxy" class="w-full h-full object-cover">
+                </div>
+                <div class="rounded-full overflow-hidden w-40 h-40 md:w-56 md:h-56 shadow-2xl border-4 border-yellow-300 transform hover:scale-110 transition-transform duration-300">
+                    <img src="https://placehold.co/500x500/F0E68C/000?text=My+Everything" alt="Placeholder image of a galaxy" class="w-full h-full object-cover">
+                </div>
+            </div>
+        </section>
+
+        <!-- Header Section -->
+        <section class="text-center py-20 bg-pink-300 proposal-gradient shadow-xl rounded-b-3xl">
+            <h1 class="text-white text-6xl md:text-8xl dancing-script font-bold drop-shadow-lg">
+                SahilZoonii forever
+            </h1>
+        </section>
+
+        <!-- Message Section -->
+        <section class="py-16 px-4 md:px-8">
+            <div class="max-w-4xl mx-auto p-8 bg-white rounded-3xl shadow-lg border-2 border-pink-200 message-box">
+                <h2 class="text-center text-4xl dancing-script text-pink-500 font-bold mb-6">My Everything,</h2>
+                <p class="text-lg md:text-xl leading-relaxed text-gray-700">
+                    Zoonii,
+My love the special day is finnally here. 🥹 The day. Preparing for weeks and the last few days I was just thinking all the day and night that how can I make it more special ❣️. Ik I'm not there with you but dw one day in sha allah next year we will be celebrating together and me sab khud karunga apne hath se. Decorate everything and make everything perfect. Rn when I'm writing this someone is playing "Dancing in the rain with you between my arms listening to our favorite song" 😭🥹 it's just so perfect. Zoonii I love you more than I can imagined that I will love someone this much. Im crazy for you Zooniipaglu fr.  Today I'm gonna tell you a secret dua that I made one day. I cried to Allah and asked for someone who will love me and take care of me like I always wanted and just after that the things between us started to become more extremely happy and we got close to each other. You are my answered dua and I believe all of our duas will get answered soon and we will hold each other hand in the most halal way.🤲🏻 Zoonii mera Chand 🌕 im so nervous, excited, anxious and worried ke me apka say ache se spend karu that special day. Me chahta hu ke ye birthday apka ab tak ka sabse best birthday ho till we get married and then we will celebrate wayyyyyy more better than this in sha allah. 🥹
+Ik my presence is one of the best gift for you on this day but I'm not here and I promise this is the first and last time after this I will be with you on your every birthday till I'm alive. Zoonii I miss you so much.
+                    From the moment you came into my life, you've filled it with a light I never knew was missing. Your kindness, your strength, your laughter - every part of you inspires me to be a better person. You are my greatest supporter, my truest friend, and the one I want to share every single moment with. You've taught me what it means to love completely and unconditionally, and for that, I will be forever grateful.
+                </p>
+                <p class="text-lg md:text-xl leading-relaxed text-gray-700 mt-4">
+                    This website is a small tribute to the immense love I have for you. It's a collection of memories, promises, and a question that will change our lives forever. Thank you for being you, for loving me, and for making my world so beautifully complete.
+                </p>
+            </div>
+        </section>
+
+        <!-- Pictures Section -->
+        <section class="py-16 px-4 md:px-8 bg-pink-100">
+            <h2 class="text-center text-4xl dancing-script text-pink-500 font-bold mb-10">Our Favorite Moments</h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+                <div class="rounded-2xl overflow-hidden shadow-xl transform hover:scale-105 transition-transform duration-300 border-2 border-pink-200">
+                    <img src="img1.jpg" alt="Picture of us" class="w-full h-auto">
+                </div>
+                <div class="rounded-2xl overflow-hidden shadow-xl transform hover:scale-105 transition-transform duration-300 border-2 border-pink-200">
+                    <img src="img2.jpg" alt="Picture of us" class="w-full h-auto">
+                </div>
+                <div class="rounded-2xl overflow-hidden shadow-xl transform hover:scale-105 transition-transform duration-300 border-2 border-pink-200">
+                    <img src="img3.jpg" alt="Picture of us" class="w-full">
+                </div>
+                <div class="rounded-2xl overflow-hidden shadow-xl transform hover:scale-105 transition-transform duration-300 border-2 border-pink-200">
+                    <img src="img4.jpg" alt="Picture of us" class="w-full h-auto">
+                </div>
+                <!-- Add more image divs here with your own photos -->
+            </div>
+        </section>
+
+        <!-- Videos Section -->
+        <!-- <section class="py-16 px-4 md:px-8">
+            <h2 class="text-center text-4xl dancing-script text-pink-500 font-bold mb-10">Memories in Motion</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <div class="aspect-video rounded-2xl overflow-hidden shadow-xl border-2 border-pink-200">
+                    Replace the src with your video URL. For YouTube, use the embed URL. -->
+                    <!-- <iframe class="w-full h-full" src="https://www.youtube.com/embed/dQw4w9WgXcQ?si=fLq0jXqQ98wX2m_J" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+                <div class="aspect-video rounded-2xl overflow-hidden shadow-xl border-2 border-pink-200">
+                    <iframe class="w-full h-full" src="https://www.youtube.com/embed/6i1TjOqK-eY?si=S1X73y4i2QWz0oI5" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div> -->
+                <!-- Add more video iframes here -->
+            <!-- </div>
+        </section> -->
+
+        <section>
+            <div class="rounded-2xl overflow-hidden shadow-xl transform hover:scale-105 transition-transform duration-300 border-2 border-pink-200">
+                    <img src="img6.jpg" alt="Picture of us" class="w-full">
+                </div>
+        </section>
+        <!-- Final Message Section -->
+        <section class="py-16 px-4 md:px-8 bg-pink-100">
+            <div class="max-w-4xl mx-auto p-8 bg-white rounded-3xl shadow-lg border-2 border-pink-200 message-box">
+                <h2 class="text-center text-4xl dancing-script text-pink-500 font-bold mb-6">A Letter to My Future...</h2>
+                <p class="text-lg md:text-xl leading-relaxed text-gray-700">
+                    Zoonii, you are the missing piece of my puzzle. The thought of spending a single day without you is unbearable. Every day with you is a gift, and I want to spend the rest of my life unwrapping that gift. I promise to always stand by your side, to support your dreams, and to love you more with each passing day. You are my home, and I want to build a life with you. Zoonii meri jaan mujhe hamare liy successfull hona he. I wanna fulfill all your dreams. When you tell me what happend bad with you so i listen it carefully and also think and try how can I make that happy. 
+Zoonii My Qalbi in past you have suffered sometimes but now I want to make your present and future bright and so beautiful that you never imagined. Mujhe apko achi achi jagah ghumane le Jana apke sath different restaurant ki dishes try krni he, apko vacations pe leke Jana he, apke dreams pure krne he, apko ek acha sa ghar dena he jisko ap apne hathon se design karogi and usey home banaogi. Apko mehengi mehengi jewelery dilana he and most imp apko bohot saaraaa beintehaa beshumar mohabbat aur ishq karna he. Ye sab sirf lafzon me nhi he meri jaan mere actions me bhi he I'm working hard here and finding all the ways possible to be with you and fulfill all our dreams. I love it when you cook and eat infront of me like a baby. Me apke hath se khaunga shaadi ke baad khana zadatar aur apko apne hath se hi khilaunga. Zoonii in sha allah ham bohot jald sath honge ek dusre ko dekhenge aur kahenge ke hamne kitna mushkil socha tha aur Allah ne kitni asani se sab kar diya. Ham itna preshan hote the and aj ham sath he. 🥺 Zoonii my Qalbi even a small thought of you with someone else haunts me like a nightmare
+                </p>
+                <p class="text-lg md:text-xl leading-relaxed text-gray-700 mt-4">
+                    Every step we’ve taken, every challenge we’ve faced, has led us to this moment. I have never been more sure of anything in my life than this.
+                </p>
+            </div>
+        </section>
+
+        <!-- Proposal Section -->
+        <section class="py-20 px-4 md:px-8 text-center bg-pink-300 proposal-gradient rounded-t-3xl shadow-xl">
+            <h2 id="proposal-title" class="text-white text-5xl md:text-7xl dancing-script font-bold drop-shadow-lg mb-8">Zoonii, my love...</h2>
+            
+            <div id="proposal-question" class="hidden flex flex-col items-center">
+                <p class="text-white text-3xl md:text-5xl dancing-script font-bold mb-8 drop-shadow-lg">
+                    Will you marry me(If your parents are ready)? In sha Allah
+                </p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <button id="qubool-he-button" class="proposal-button bg-white text-pink-500 font-bold text-lg md:text-xl py-3 px-6 rounded-full shadow-lg hover:shadow-xl">
+                        Qubool hai
+                    </button>
+                    <button id="yes-button" class="proposal-button bg-white text-pink-500 font-bold text-lg md:text-xl py-3 px-6 rounded-full shadow-lg hover:shadow-xl">
+                        Yes
+                    </button>
+                    <button id="sochungi-button" class="proposal-button bg-white text-pink-500 font-bold text-lg md:text-xl py-3 px-6 rounded-full shadow-lg hover:shadow-xl">
+                        Sochungi
+                    </button>
+                    <button id="no-button" class="proposal-button bg-white text-pink-500 font-bold text-lg md:text-xl py-3 px-6 rounded-full shadow-lg hover:shadow-xl">
+                        No
+                    </button>
+                </div>
+            </div>
+
+            <button id="start-proposal-button" class="proposal-button bg-white text-pink-500 font-bold text-2xl md:text-3xl py-4 px-8 rounded-full shadow-lg hover:shadow-xl transition-all duration-300">
+                Click to Reveal whats in my Heart.
+            </button>
+
+            <div id="proposal-response" class="mt-8">
+                <p id="response-message" class="text-white text-2xl md:text-4xl hidden dancing-script font-bold drop-shadow-lg"></p>
+                <p id="blessed-message" class="text-white text-2xl md:text-4xl hidden dancing-script font-bold drop-shadow-lg">I'm so blessed, happy and lucky! I Loove you so muchhhhh </p>
+                <img id="proposal-photo" src="uploaded:image.png-147c4580-27a6-4967-8529-a10b67cdb03a" alt="A lovely photo for my fiancee" class="hidden mx-auto mt-8 max-w-xs md:max-w-md lg:max-w-lg rounded-xl shadow-2xl transition-all duration-700">
+            </div>
+
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const loadingScreen = document.getElementById('loading-screen');
+            const mainContent = document.getElementById('main-content');
+            const startProposalButton = document.getElementById('start-proposal-button');
+            const proposalQuestion = document.getElementById('proposal-question');
+            const responseMessage = document.getElementById('response-message');
+            const blessedMessage = document.getElementById('blessed-message');
+            const confettiContainer = document.getElementById('confetti-container');
+            const proposalPhoto = document.getElementById('proposal-photo');
+
+            const quboolHeButton = document.getElementById('qubool-he-button');
+            const yesButton = document.getElementById('yes-button');
+            const sochungiButton = document.getElementById('sochungi-button');
+            const noButton = document.getElementById('no-button');
+
+            // Fade out the loading screen after a delay
+            window.addEventListener('load', () => {
+                setTimeout(() => {
+                    loadingScreen.classList.add('fade-out');
+                    setTimeout(() => {
+                        loadingScreen.style.display = 'none';
+                        mainContent.classList.remove('hidden');
+                        document.body.style.overflowY = 'auto'; // Enable scrolling
+                    }, 1500); // Wait for fade-out transition to complete
+                }, 2000); // 2 second delay before starting fade out
+            });
+
+            // Handle the initial button click to reveal proposal options
+            startProposalButton.addEventListener('click', () => {
+                startProposalButton.style.display = 'none';
+                proposalQuestion.classList.remove('hidden');
+            });
+            
+            function showResponse(message, isCelebration = false) {
+                proposalQuestion.classList.add('hidden');
+                responseMessage.textContent = message;
+                responseMessage.classList.remove('hidden');
+                if (isCelebration) {
+                    blessedMessage.classList.remove('hidden');
+                    proposalPhoto.classList.remove('hidden');
+                    celebrate();
+                }
+            }
+
+            function celebrate() {
+                confettiContainer.classList.remove('hidden');
+                for (let i = 0; i < 50; i++) {
+                    const confettiPiece = document.createElement('div');
+                    confettiPiece.className = 'confetti-piece';
+                    confettiPiece.style.left = `${Math.random() * 100}vw`;
+                    confettiPiece.style.animationDelay = `${Math.random() * 3}s`;
+                    confettiPiece.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                    confettiContainer.appendChild(confettiPiece);
+                }
+            }
+
+            quboolHeButton.addEventListener('click', () => {
+                showResponse("I'm so happy! Let's celebrate!", true);
+            });
+
+            yesButton.addEventListener('click', () => {
+                showResponse("Thank you so much! I can't wait to spend my life forever with you!");
+            });
+
+            sochungiButton.addEventListener('click', () => {
+                showResponse("Please think now and say yessss");
+                // proposalQuestion.classList.remove('hidden');
+                // responseMessage.classList.add('hidden');
+            });
+
+            noButton.addEventListener('click', () => {
+                showResponse("Please 🥺 think again bubu");
+                // proposalQuestion.classList.remove('hidden');
+                // responseMessage.classList.add('hidden');
+            });
+        });
+    </script>
+</body>
+</html>
